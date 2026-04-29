@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>燕园调查局 | 北大社会学考研100天</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+        body { font-family: 'Noto Serif SC', serif; background: #0a0a0a; color: #d1d1d1; }
+        .pku-red { color: #bd0000; }
+        .pku-bg-red { background-color: #bd0000; }
+        .glass-panel { background: rgba(20, 20, 20, 0.95); border: 1px solid #333; }
+        .lecture-scroll::-webkit-scrollbar { width: 6px; }
+        .lecture-scroll::-webkit-scrollbar-thumb { background: #bd0000; border-radius: 3px; }
+        .locked { filter: blur(4px); pointer-events: none; }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <nav class="h-16 flex items-center justify-between px-8 border-b border-red-900 bg-black z-50">
+        <div class="flex items-center space-x-4">
+            <span class="pku-bg-red text-white text-xs px-2 py-1 font-bold">已接入</span>
+            <h1 class="tracking-widest font-bold text-lg">燕园调查局 <span class="text-gray-600 ml-2 text-sm">PKU SOC STUDY CORE</span></h1>
+        </div>
+        <div id="nav-day" class="text-red-500 font-bold">DAY 01: 实证主义的兴起</div>
+    </nav>
+
+    <main class="flex-1 flex overflow-hidden">
+        <section class="w-2/3 p-10 overflow-y-auto lecture-scroll border-r border-gray-800">
+            <div id="lecture-area">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold pku-red mb-4" id="content-title">载入中...</h2>
+                    <div class="h-1 w-20 pku-bg-red mb-8"></div>
+                </div>
+                
+                <div id="content-body" class="space-y-8 text-lg leading-relaxed text-gray-300">
+                    </div>
+
+                <div class="mt-12 p-8 border-2 border-red-900 bg-red-950 bg-opacity-10">
+                    <p class="font-bold text-red-500 mb-2">探员手册：</p>
+                    <p class="text-sm italic">“理论是观察世界的护目镜。”——请确保你已彻底理解上述北大考点，点击下方确认后，将开启今日“社会现实”解谜。一旦开启，无法返回查看笔记。</p>
+                    <button onclick="unlockTest()" id="unlock-btn" class="mt-6 px-10 py-3 pku-bg-red text-white font-bold hover:bg-red-700 transition transform hover:scale-105">
+                        确认研读完毕 (Unlock Challenge)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-1/3 flex flex-col relative bg-neutral-900">
+            <div id="lock-overlay" class="absolute inset-0 z-40 bg-black bg-opacity-90 flex flex-col items-center justify-center text-center p-10">
+                <div class="text-6xl mb-6 text-red-900">🔒</div>
+                <h3 class="text-xl font-bold mb-2">区域锁定</h3>
+                <p class="text-gray-500 text-sm italic">完成左侧【深度精讲】研读后，点击确认即可解锁今日调查任务。</p>
+            </div>
+
+            <div class="p-8 h-full flex flex-col">
+                <h3 class="text-red-600 font-bold tracking-widest uppercase mb-6 flex items-center">
+                    <span class="mr-2">●</span> 今日调查任务
+                </h3>
+                <div id="quiz-container" class="flex-1 overflow-y-auto space-y-6">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- 核心考研教材数据库 ---
+        const DATA = {
+            day1: {
+                title: "Day 01: 实证主义——社会学的科学宣示",
+                lecture: `
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="text-xl font-bold text-white mb-2">一、 北大真题常考：孔德的“社会学”定义</h4>
+                            <p>孔德认为社会学是关于<b>“社会良性运行和协调发展的条件和机制”</b>的科学（实证主义立场）。他将其命名为“社会物理学”，旨在利用自然科学的逻辑来发现社会运行的不变规律。</p>
+                        </section>
+                        <section class="bg-gray-800 p-4 border-l-4 border-red-600">
+                            <h4 class="text-red-500 font-bold mb-2">【必背名词解释：三阶段法则】</h4>
+                            <p class="text-sm">这是北大623/815考研的高频起手式点：</p>
+                            <ul class="list-disc ml-5 text-sm mt-2 space-y-1">
+                                <li><b>神学阶段：</b>以虚构力量解释世界（初级）。</li>
+                                <li><b>形而上学阶段：</b>以抽象原则（如“本性”）取代神灵（过渡）。</li>
+                                <li><b>实证阶段：</b>通过观察、实验和比较，探索现象间的不变关系（终极阶段）。</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4 class="text-xl font-bold text-white mb-2">二、 理论辨析：社会静力学 vs 社会动力学</h4>
+                            <p><b>社会静力学 (Social Statics)：</b>研究社会有机体的各部分如何达成均衡，核心词是“秩序”（Order）。基本单位是家庭而非个人。</p>
+                            <p><b>社会动力学 (Social Dynamics)：</b>研究社会有机体如何演化，核心词是“进步”（Progress）。</p>
+                        </div>
+                `,
+                puzzles: [
+                    {
+                        q: "【深度辨析】孔德为何认为‘个人’不应作为社会学的研究单位？",
+                        options: [
+                            { t: "A. 个人太复杂，无法进行量化分析。", c: false, f: "非孔德本意。孔德是从整体主义出发的。" },
+                            { t: "B. 个人只是一个抽象概念，只有‘家庭’才是构成社会真实的细胞。", c: true, f: "完全正确！这是北大解析孔德‘整体论’的核心逻辑。" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // --- 页面控制逻辑 ---
+        function loadDay(dayId) {
+            const dayData = DATA[dayId];
+            document.getElementById('content-title').innerHTML = dayData.title;
+            document.getElementById('content-body').innerHTML = dayData.lecture;
+            
+            let quizHtml = "";
+            dayData.puzzles.forEach((p, i) => {
+                quizHtml += `
+                    <div class="bg-black p-5 border border-gray-800 rounded-lg">
+                        <p class="text-sm font-bold mb-4 text-gray-100">${p.q}</p>
+                        <div class="space-y-3">
+                            ${p.options.map((opt, optIdx) => `
+                                <button onclick="checkAnswer(${opt.c}, '${opt.f}')" class="w-full text-left p-3 text-xs border border-gray-700 hover:border-red-600 hover:bg-red-950 transition rounded">
+                                    ${opt.t}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('quiz-container').innerHTML = quizHtml;
+        }
+
+        function unlockTest() {
+            document.getElementById('lock-overlay').style.display = 'none';
+            document.getElementById('unlock-btn').innerText = "学习任务进行中...";
+            document.getElementById('unlock-btn').disabled = true;
+            document.getElementById('unlock-btn').classList.replace('pku-bg-red', 'bg-gray-700');
+        }
+
+        function checkAnswer(isCorrect, feedback) {
+            if(isCorrect) {
+                alert("【逻辑通过】探员，你已内化该考点。\n\n" + feedback);
+            } else {
+                alert("【系统报错】你的理解存在偏差：\n\n" + feedback);
+            }
+        }
+
+        window.onload = () => loadDay('day1');
+    </script>
+</body>
+</html>
