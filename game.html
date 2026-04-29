@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>燕园调查局 - 任务进行中</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .stats-panel { background: rgba(20, 20, 20, 0.9); border-left: 2px solid #8b0000; }
+        .dialogue-box { background: rgba(30, 30, 30, 0.95); border-top: 4px solid #8b0000; }
+    </style>
+</head>
+<body class="bg-black text-gray-200 h-screen flex flex-col overflow-hidden">
+
+    <header class="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900">
+        <div class="flex items-center space-x-4">
+            <span class="text-red-600 font-bold tracking-tighter">AGENT ID: 001</span>
+            <span id="current-day" class="bg-red-900 text-xs px-2 py-1 rounded">Day 01: 古典学派起点</span>
+        </div>
+        <div class="flex space-x-6 text-sm">
+            <span>社会学理论: <b id="stat-theory" class="text-red-500">0</b></span>
+            <span>研究方法: <b id="stat-method" class="text-red-500">0</b></span>
+            <span>通关进度: <b id="stat-progress" class="text-red-500">0%</b></span>
+        </div>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden">
+        <div class="flex-1 relative p-8 flex items-center justify-center border-r border-gray-800">
+            <div id="npc-display" class="text-center transition-all duration-500">
+                <div class="w-48 h-48 bg-gray-800 rounded-full mb-4 border-4 border-red-900 mx-auto flex items-center justify-center text-4xl">
+                    🎓
+                </div>
+                <h3 id="npc-name" class="text-2xl font-bold text-red-500">神秘导师</h3>
+                <p id="scene-desc" class="text-gray-400 italic mt-2">你正站在未名湖畔，迷雾中出现了一个身影...</p>
+            </div>
+        </div>
+
+        <div class="w-80 stats-panel p-6 overflow-y-auto">
+            <h3 class="text-sm font-bold text-red-600 mb-4 tracking-widest uppercase">当前任务</h3>
+            <div id="task-list" class="space-y-4">
+                <div class="bg-gray-800 p-3 rounded text-xs border-l-2 border-red-500">
+                    <p class="font-bold">初步接触：</p>
+                    <p class="text-gray-400 mt-1">与导师对话，领取你的第一本调查手册（古典理论概览）。</p>
+                </div>
+            </div>
+
+            <h3 class="text-sm font-bold text-red-600 mt-8 mb-4 tracking-widest uppercase">已获线索 (名词解释)</h3>
+            <div id="clue-list" class="grid grid-cols-1 gap-2">
+                </div>
+        </div>
+    </main>
+
+    <footer class="h-64 dialogue-box p-8 relative">
+        <div class="max-w-4xl mx-auto">
+            <div id="dialogue-text" class="text-xl leading-relaxed">
+                正在接入调查局网络... 身份确认成功。
+            </div>
+            <div id="options-container" class="mt-8 flex flex-wrap gap-4">
+                </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/core.js"></script>
+</body>
+</html>
